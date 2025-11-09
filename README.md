@@ -1,10 +1,3 @@
-### Experiment - x01
+[EXPERIMENT X01 - CATALOG]
 
-> Catalog
-
-### Testing Subject 
-
-> Animated list rendering
-
-### Source  
-> [Nicolas Giannn - X](https://x.com/nicolasgiannn/status/1895172410061578750)
+INSPIRED BY - [Nicolas Giannn - X](https://x.com/nicolasgiannn)

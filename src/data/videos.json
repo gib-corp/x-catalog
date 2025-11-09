@@ -1,0 +1,50 @@
+[
+    {
+        "id": 1,
+        "title": "A Knight of the Seven Kingdoms",
+        "source": "HBO MAX",
+        "link": "https://www.youtube.com/watch?v=UPFRItMOgPo"
+    },
+    {
+        "id": 2,
+        "title": "Hoppers",
+        "source": "Pixar",
+        "link": "https://www.youtube.com/watch?v=hJnAHzo4-KI"
+    },
+    {
+        "id": 3,
+        "title": "Last Samurai Standing",
+        "source": "Netflix",
+        "link": "https://www.youtube.com/watch?v=eLfE-WiHAWU"
+    },
+    {
+        "id": 5,
+        "title": "Marvel Television's Wonder Man",
+        "source": "Marvel Entertainment",
+        "link": "https://www.youtube.com/watch?v=lgoxHC7WF9w"
+    },
+    {
+        "id": 2,
+        "title": "Mortal Kombat II",
+        "source": "Warner Bros.",
+        "link": "https://www.youtube.com/watch?v=HkTyjO4ryZo"
+    },
+    {
+        "id": 4,
+        "title": "Pluribus",
+        "source": "Apple TV & Sony Pictures Television",
+        "link": "https://www.youtube.com/watch?v=a6lzvWby9UE"
+    },
+    {
+        "id": 3,
+        "title": "Stranger Things 5",
+        "source": "Netflix",
+        "link": "https://www.youtube.com/watch?v=PssKpzB0Ah0"
+    },
+    {
+        "id": 8,
+        "title": "Stranger Things: Tales From '85",
+        "source": "Netflix",
+        "link": "https://www.youtube.com/watch?v=7m49Wm64ngo"
+    }
+]

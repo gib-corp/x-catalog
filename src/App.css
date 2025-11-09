@@ -1,0 +1,18 @@
+header {
+  padding: 7.5rem 1rem 0;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  text-transform: uppercase;
+}
+
+section {
+  margin-top: 2rem;
+  padding: 0 1rem;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  text-transform: uppercase;
+}
