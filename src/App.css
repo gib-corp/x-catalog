@@ -4,7 +4,6 @@ header {
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-  text-transform: uppercase;
 }
 
 section {
@@ -14,5 +13,23 @@ section {
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-  text-transform: uppercase;
+}
+
+section:hover {
+  cursor: pointer;
+}
+
+section:hover .case .title,
+section:hover .case .separator,
+section:hover .case .source {
+  color: var(--hover-color);
+}
+
+section .case:hover .title {
+  color: #fff;
+}
+
+section .case:hover .separator,
+section .case:hover .source {
+  color: var(--text-color);
 }

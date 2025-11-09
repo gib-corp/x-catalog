@@ -2,6 +2,7 @@
 
 :root {
   --bg-color: #0c0b0b;
+  --hover-color: #454549;
   --text-color: #D9DAD7;
 
   --font-family: Inter, Avenir, Helvetica, sans-serif;
@@ -36,6 +37,7 @@ body {
   line-height: var(--line-height);
   font-weight: var(--font-weight);
   letter-spacing: -0.01rem;
+  text-transform: uppercase;
 }
 
 nav a,
@@ -45,7 +47,7 @@ footer p {
   display: block;
   text-decoration: none;
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 500;
   color: var(--text-color);
 }
 
