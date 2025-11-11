@@ -1,5 +1,13 @@
+/* Layout */
+
+main {
+  padding: 0 1rem;
+}
+
+/* App */
+
 header {
-  padding: 7.5rem 1rem 0;
+  padding-top: 7.5rem;
   font-size: 1rem;
   font-style: normal;
   font-weight: 400;
@@ -8,7 +16,6 @@ header {
 
 section {
   margin-top: 2rem;
-  padding: 0 1rem;
   font-size: 1rem;
   font-style: normal;
   font-weight: 400;
@@ -21,7 +28,7 @@ section:hover {
 
 section:hover .case .title,
 section:hover .case .separator,
-section:hover .case .source {
+section:hover .case .director {
   color: var(--hover-color);
 }
 
@@ -30,6 +37,6 @@ section .case:hover .title {
 }
 
 section .case:hover .separator,
-section .case:hover .source {
+section .case:hover .director {
   color: var(--text-color);
 }

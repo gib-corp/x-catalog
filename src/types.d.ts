@@ -9,14 +9,20 @@ declare module './components/Footer/Footer' {
 }
 
 type Video = {
-  id: number
+  id: string
   title: string
-  source: string
+  director: string
   link: string
+}
+
+type PreviewProps = {
+  hoverVideo: string | null;
+  hoverSection: boolean | null;
 }
 
 type CaseProps = {
   title: string
-  source: string
+  director: string
   link: string
+  onHover: () => void;
 }

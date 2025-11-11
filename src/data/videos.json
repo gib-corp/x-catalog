@@ -1,50 +1,74 @@
 [
     {
-        "id": 1,
-        "title": "A Knight of the Seven Kingdoms",
-        "source": "HBO MAX",
-        "link": "https://www.youtube.com/watch?v=UPFRItMOgPo"
+        "id": "zootopia2",
+        "title": "Zootopia 2",
+        "director": "Jared Bush +",
+        "link": "https://www.youtube.com/watch?v=BjkIOU5PhyQ"
     },
     {
-        "id": 2,
-        "title": "Hoppers",
-        "source": "Pixar",
-        "link": "https://www.youtube.com/watch?v=hJnAHzo4-KI"
+        "id": "teenagemutantninjaturtleschromalone2",
+        "title": "Teenage Mutant Ninja Turtles : Chrome Alone 2",
+        "director": "Kent Seki",
+        "link": "https://www.youtube.com/watch?v=HZ3ZIHw9Vws"
     },
     {
-        "id": 3,
-        "title": "Last Samurai Standing",
-        "source": "Netflix",
-        "link": "https://www.youtube.com/watch?v=eLfE-WiHAWU"
+        "id": "spidermanacrossthespiderverse",
+        "title": "SPIDER-MAN : ACROSS THE SPIDER-VERSE",
+        "director": "Joaquim Dos Santos +",
+        "link": "https://www.youtube.com/watch?v=cqGjhVJWtEg"
     },
     {
-        "id": 5,
-        "title": "Marvel Television's Wonder Man",
-        "source": "Marvel Entertainment",
-        "link": "https://www.youtube.com/watch?v=lgoxHC7WF9w"
+        "id": "kungfupanda4",
+        "title": "KUNG FU PANDA 4",
+        "director": "Mike Mitchell",
+        "link": "https://www.youtube.com/watch?v=_inKs4eeHiI"
     },
     {
-        "id": 2,
-        "title": "Mortal Kombat II",
-        "source": "Warner Bros.",
-        "link": "https://www.youtube.com/watch?v=HkTyjO4ryZo"
+        "id": "thesupermariobromovie",
+        "title": "The Super Mario Bros. Movie",
+        "director": "Aaron Horvath +",
+        "link": "https://www.youtube.com/watch?v=TnGl01FkMMo"
     },
     {
-        "id": 4,
-        "title": "Pluribus",
-        "source": "Apple TV & Sony Pictures Television",
-        "link": "https://www.youtube.com/watch?v=a6lzvWby9UE"
+        "id": "baymax",
+        "title": "Baymax!",
+        "director": "Don Hall +",
+        "link": "https://www.youtube.com/watch?v=lcYPrMk12zw"
     },
     {
-        "id": 3,
-        "title": "Stranger Things 5",
-        "source": "Netflix",
-        "link": "https://www.youtube.com/watch?v=PssKpzB0Ah0"
+        "id": "liloandstitch",
+        "title": "Lilo & Stitch",
+        "director": "Dean Fleischer Camp",
+        "link": "https://www.youtube.com/watch?v=VWqJifMMgZE"
     },
     {
-        "id": 8,
-        "title": "Stranger Things: Tales From '85",
-        "source": "Netflix",
-        "link": "https://www.youtube.com/watch?v=7m49Wm64ngo"
+        "id": "transformersone",
+        "title": "Transformers One",
+        "director": "Josh Cooley",
+        "link": "https://www.youtube.com/watch?v=5a09yJU-mCI"
+    },
+    {
+        "id": "pussinboots",
+        "title": "Puss In Boots : The Last Wish",
+        "director": "Joel Crawfordy",
+        "link": "https://www.youtube.com/watch?v=tHb7WlgyaUc"
+    },
+    {
+        "id": "thelegomovie",
+        "title": "The LEGO® Movie",
+        "director": "Chris Miller +",
+        "link": "https://www.youtube.com/watch?v=fZ_JOBCLF-I"
+    },
+    {
+        "id": "wreckitralph2",
+        "title": "Wreck-It Ralph 2 : Ralph Breaks the Internet",
+        "director": "Rich Moore +",
+        "link": "https://www.youtube.com/watch?v=_BcYBFC6zfY"
+    },
+    {
+        "id": "thewildrobot",
+        "title": "The Wild Robot",
+        "director": "Chris Sanders",
+        "link": "https://www.youtube.com/watch?v=67vbA5ZJdKQ"
     }
 ]

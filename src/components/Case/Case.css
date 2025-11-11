@@ -7,3 +7,9 @@
     font-weight: 600;
     color: #fff;
 }
+
+.case .title,
+.case .separator,
+.case .director {
+  transition: color 0.2s ease;
+}
