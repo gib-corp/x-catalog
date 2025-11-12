@@ -1,15 +1,21 @@
 .case {
     padding: .3rem 0;
-    font-size: 1rem;
+    font-size: clamp(.8rem, 2vw, 1rem);
+    overflow: hidden;
 }
 
-.case .title {
+.case .container {
+  transform: translateY(1.6rem);
+}
+
+.case .container .title {
     font-weight: 600;
     color: #fff;
 }
 
-.case .title,
-.case .separator,
-.case .director {
+.case .container .title,
+.case .container .separator,
+.case .container .director {
+  display: inline-block;
   transition: color 0.2s ease;
 }

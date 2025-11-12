@@ -4,16 +4,18 @@ import '../App.css'
 
 interface LayoutProps {
   children: React.ReactNode
+  hasLoaded: boolean
 }
 
-const Layout = ({ children }: LayoutProps) => {
+const Layout = ({ children, hasLoaded }: LayoutProps) => {
+
   return (
     <>
-      <Nav />
+      <Nav hasLoaded={ hasLoaded }/>
       <main>
           {children}
       </main>
-      <Footer />
+      <Footer hasLoaded={ hasLoaded }/>
     </>
   )
 }

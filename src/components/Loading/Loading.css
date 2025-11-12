@@ -1,0 +1,36 @@
+.loader {
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100vw;
+    padding: 0 1rem;
+}
+
+.loader .container {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    height: .2rem;
+    border-radius: .1rem;
+    width: 80%;
+    overflow: hidden;
+}
+
+.load {
+    position: absolute;
+    height: .2rem;
+    width: 0%;
+    border-radius: .1rem;
+    background-color: var(--text-color);
+}
+
+.bar {
+    height: .2rem;
+    width: 0%;
+    border-radius: .1rem;
+    background-color: var(--hover-color);
+}

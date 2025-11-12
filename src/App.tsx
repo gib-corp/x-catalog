@@ -1,28 +1,39 @@
 import { useState } from "react";
 import Layout from './layouts/layout'
 import Case from './components/Case/Case'
-import videos from "./data/videos.json"
 import Preview from './components/Preview/Preview'
+import Loading from "./components/Loading/Loading";
+import videos from "./data/videos.json"
+import Header from "./components/Header/Header";
 
 const App = () => {
 
   const [hoverVideo, setHoverVideo] = useState<string | null>(null)
   const [hoverSection, setHoverSection] = useState(false)
+  const [hasLoaded, setHasLoaded] = useState(false)
 
   const handleHover = (fileId: string) => {
     setHoverVideo(fileId)
   }
 
   return (
-    <Layout>
+    <Layout hasLoaded={hasLoaded}>
+      {!hasLoaded && (
+        <Loading onLoaded={() => setHasLoaded(true)} />
+      )}
       <Preview
         hoverVideo={hoverVideo}
         hoverSection={hoverSection}
       />
-      <header>[&nbsp;&nbsp;Selected trailers&nbsp;&nbsp;]</header>
+      <Header
+        hasLoaded={hasLoaded}
+      />
       <section
         onMouseEnter={() => { setHoverSection(true) }}
-        onMouseLeave={() => { setHoverSection(false) }}
+        onMouseLeave={() => {
+          setHoverSection(false)
+          handleHover("empty")
+        }}
       >
         {videos.map((video: Video) => (
           <Case
@@ -31,6 +42,7 @@ const App = () => {
             director={video.director}
             link={video.link}
             onHover={() => handleHover(video.id)}
+            hasLoaded={hasLoaded}
           />
         ))}
       </section>

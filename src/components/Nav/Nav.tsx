@@ -1,8 +1,24 @@
+import { useEffect, useRef } from 'react'
+import gsap from 'gsap'
 import "./Nav.css";
 
-function Nav() {
+function Nav({ hasLoaded }: NavProps) {
+
+  const navRef = useRef<HTMLElement>(null)
+
+  useEffect(() => {
+    if (!hasLoaded || !navRef.current) return
+
+    const tl = gsap.timeline()
+
+    tl.to(navRef.current, {
+        opacity: 1,
+        duration: 1.2
+    })
+  }, [hasLoaded])
+
   return (
-    <nav>
+    <nav ref={navRef}>
       <div className="logo">
         <a href="#">X-Lab</a>
       </div>

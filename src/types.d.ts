@@ -8,6 +8,18 @@ declare module './components/Footer/Footer' {
   export default Footer;
 }
 
+interface NavProps {
+  hasLoaded: boolean
+}
+
+interface FooterProps {
+  hasLoaded: boolean
+}
+
+type LoadingProps = {
+  onLoaded: () => void
+}
+
 type Video = {
   id: string
   title: string
@@ -16,13 +28,18 @@ type Video = {
 }
 
 type PreviewProps = {
-  hoverVideo: string | null;
-  hoverSection: boolean | null;
+  hoverVideo: string | null
+  hoverSection: boolean | null
+}
+
+type HeaderProps = {
+  hasLoaded: boolean
 }
 
 type CaseProps = {
   title: string
   director: string
   link: string
-  onHover: () => void;
+  onHover: () => void
+  hasLoaded: boolean
 }
