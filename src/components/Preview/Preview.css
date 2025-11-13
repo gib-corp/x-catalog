@@ -11,7 +11,8 @@
     align-items: center;
 }
 
-.frame video {
+.frame video,
+.frame img {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -20,11 +21,5 @@
 
 .frame img {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    z-index: 20;
+    z-index: 1;
 }

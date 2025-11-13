@@ -7,12 +7,39 @@ const Preview = ({ hoverVideo, hoverSection }: PreviewProps) => {
   const [canPlay, setCanPlay] = useState(false)
 
   useEffect(() => {
-    videos.forEach(({ id }) => {
-      const vid = document.createElement('video')
-      vid.src = `/videos/${id}.mp4`
-      vid.preload = 'metadata'
-      vid.muted = true
-    })
+    const preloadImagesSequentially = async () => {
+      for (const { id } of videos) {
+        await new Promise<void>((resolve) => {
+          const img = new Image()
+          img.src = `/thumbnails/${id}.jpeg`
+          img.onload = () => resolve()
+          img.onerror = () => resolve()
+        })
+      }
+    }
+
+    const preloadVideosSequentially = async () => {
+      for (const { id } of videos) {
+        await new Promise<void>((resolve) => {
+          const vid = document.createElement('video')
+          vid.src = `/videos/${id}.mp4`
+          vid.preload = 'metadata'
+          vid.muted = true
+
+          vid.onloadedmetadata = () => resolve()
+          vid.onerror = () => resolve()
+
+          setTimeout(() => resolve(), 1500)
+        })
+      }
+    }
+
+    const preloadAll = async () => {
+      await preloadImagesSequentially()
+      await preloadVideosSequentially()
+    }
+
+    preloadAll()
   }, [])
 
   useEffect(() => {
@@ -39,7 +66,7 @@ const Preview = ({ hoverVideo, hoverSection }: PreviewProps) => {
   return (
     <div className="frame">
       { !canPlay && (
-        <img src={`/thumbnails/${hoverVideo}.jpeg`} alt="Thumbnail" />
+        <img src={`/thumbnails/${hoverVideo}.jpeg`} />
       )}
       <video
         ref={videoRef}
