@@ -10,7 +10,8 @@ const App = () => {
 
   const [hoverVideo, setHoverVideo] = useState<string | null>(null)
   const [hoverSection, setHoverSection] = useState(false)
-  const [hasLoaded, setHasLoaded] = useState(false)
+  const [hasLoaded, setHasLoaded] = useState(false) // Animation
+  const [hasPreloaded, setHasPreloaded] = useState(false) // Cache videos
 
   const handleHover = (fileId: string) => {
     setHoverVideo(fileId)
@@ -18,12 +19,13 @@ const App = () => {
 
   return (
     <Layout hasLoaded={hasLoaded}>
-      {!hasLoaded && (
+      {!hasLoaded && hasPreloaded && (
         <Loading onLoaded={() => setHasLoaded(true)} />
       )}
       <Preview
         hoverVideo={hoverVideo}
         hoverSection={hoverSection}
+        onPreloaded={() => setHasPreloaded(true)}
       />
       <Header
         hasLoaded={hasLoaded}
@@ -40,7 +42,6 @@ const App = () => {
             key={video.id}
             title={video.title}
             director={video.director}
-            link={video.link}
             onHover={() => handleHover(video.id)}
             hasLoaded={hasLoaded}
           />

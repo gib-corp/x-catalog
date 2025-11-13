@@ -3,11 +3,11 @@ import gsap from 'gsap'
 
 import "./Case.css";
 
-const Case = ({ title, director, link, onHover, hasLoaded }: CaseProps) => {
+const Case = ({ title, director, onHover, hasLoaded }: CaseProps) => {
 
   useEffect(() => {
 
-    if (!hasLoaded) return;
+    if (!hasLoaded) return
 
     const text = gsap.utils.toArray<HTMLDivElement>(".case > .container")
     const tl = gsap.timeline()
@@ -26,9 +26,9 @@ const Case = ({ title, director, link, onHover, hasLoaded }: CaseProps) => {
   return (
     <p className="case" onMouseEnter={onHover}>
       <div className="container">
-        <span className="title">{title}</span>
-        <span className="separator">&nbsp; - &nbsp;</span>
-        <span className="director">{director}</span>
+          <span className="title">{title}</span>
+          <span className="separator">&nbsp; - &nbsp;</span>
+          <span className="director">{director}</span>
       </div>
     </p>
   );
