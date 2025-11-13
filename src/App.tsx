@@ -30,23 +30,25 @@ const App = () => {
       <Header
         hasLoaded={hasLoaded}
       />
-      <section
-        onMouseEnter={() => { setHoverSection(true) }}
-        onMouseLeave={() => {
-          setHoverSection(false)
-          handleHover("empty")
-        }}
-      >
-        {videos.map((video: Video) => (
-          <Case
-            key={video.id}
-            title={video.title}
-            director={video.director}
-            onHover={() => handleHover(video.id)}
-            hasLoaded={hasLoaded}
-          />
-        ))}
-      </section>
+      { hasLoaded && (
+        <section
+          onMouseEnter={() => { setHoverSection(true) }}
+          onMouseLeave={() => {
+            setHoverSection(false)
+            handleHover("empty")
+          }}
+        >
+          {videos.map((video: Video) => (
+            <Case
+              key={video.id}
+              title={video.title}
+              director={video.director}
+              onHover={() => handleHover(video.id)}
+              hasLoaded={hasLoaded}
+            />
+          ))}
+        </section>
+      )}
     </Layout>
   )
 }
