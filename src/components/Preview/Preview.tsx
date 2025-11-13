@@ -1,35 +1,17 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import videos from "../../data/videos.json"
 import "./Preview.css"
 
-const Preview = ({ hoverVideo, hoverSection, onPreloaded}: PreviewProps) => {
-
+const Preview = ({ hoverVideo, hoverSection }: PreviewProps) => {
   const videoRef = useRef<HTMLVideoElement>(null)
-  const cacheRefs = useRef<Record<string, HTMLVideoElement>>({})
-  
+  const [canPlay, setCanPlay] = useState(false)
+
   useEffect(() => {
-
-    let loadCount = 0
-
     videos.forEach(({ id }) => {
-      const src = `/videos/${id}.mp4`
       const vid = document.createElement('video')
-      vid.src = src
+      vid.src = `/videos/${id}.mp4`
       vid.preload = 'metadata'
       vid.muted = true
-
-      const handleLoad = () => {
-        cacheRefs.current[src] = vid
-        loadCount++
-
-        if (loadCount === videos.length) {
-          onPreloaded()
-        }
-      }
-
-      vid.onloadedmetadata = handleLoad
-      vid.onerror = handleLoad
-      vid.load()
     })
   }, [])
 
@@ -37,32 +19,37 @@ const Preview = ({ hoverVideo, hoverSection, onPreloaded}: PreviewProps) => {
     const frameVideo = videoRef.current
     if (!frameVideo || !hoverVideo) return
 
-    const newSrc = `/videos/${hoverVideo}.mp4`
-    if (frameVideo.src.endsWith(newSrc)) return
+    setCanPlay(false)
+    frameVideo.src = `/videos/${hoverVideo}.mp4`
 
-    const cached = cacheRefs.current[newSrc]
-    if (cached) {
-      frameVideo.src = cached.src
-      frameVideo.currentTime = 0
-      frameVideo.play().catch(() => {})
-    } else {
-      frameVideo.src = newSrc
-      frameVideo.load()
+    const handleCanPlay = () => {
+      setCanPlay(true)
       frameVideo.play().catch(() => {})
     }
+
+    frameVideo.addEventListener('canplay', handleCanPlay, { once: true })
+
+    return () => {
+      frameVideo.removeEventListener('canplay', handleCanPlay)
+    }
   }, [hoverVideo])
-  
+
+  if (!hoverSection) return null
+
   return (
-    <div className="frame" style={{ visibility: hoverSection ? 'visible' : 'hidden' }}>
+    <div className="frame">
+      { !canPlay && (
+        <img src={`/thumbnails/${hoverVideo}.jpeg`} alt="Thumbnail" />
+      )}
       <video
         ref={videoRef}
         height="100%"
         autoPlay
         loop
-        muted 
-        />
+        muted
+      />
     </div>
-  );
+  )
 }
 
-export default Preview;
+export default Preview

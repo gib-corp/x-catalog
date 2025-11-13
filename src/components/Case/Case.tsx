@@ -3,14 +3,14 @@ import gsap from 'gsap'
 
 import "./Case.css";
 
-const Case = ({ title, director, onHover, hasLoaded }: CaseProps) => {
+const Case = ({ title, director, onHover, hasLoaded, onListReady }: CaseProps) => {
 
   useEffect(() => {
 
     if (!hasLoaded) return
 
     const text = gsap.utils.toArray<HTMLDivElement>(".case > .container")
-    const tl = gsap.timeline()
+    const tl = gsap.timeline({ onComplete: onListReady })
 
     tl.to(text, {
       y: 0,

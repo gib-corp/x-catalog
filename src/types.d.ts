@@ -30,7 +30,6 @@ type Video = {
 type PreviewProps = {
   hoverVideo: string | null
   hoverSection: boolean | null
-  onPreloaded: () => void
 }
 
 type HeaderProps = {
@@ -42,4 +41,5 @@ type CaseProps = {
   director: string
   onHover: () => void
   hasLoaded: boolean
+  onListReady: () => void
 }
