@@ -32,7 +32,7 @@ const App = () => {
         hasLoaded={hasLoaded}
       />
       { hasLoaded && (
-        <section
+        <section style={!isListReady ? { pointerEvents: 'none' } : { pointerEvents: 'auto' }}
           onMouseEnter={() => { setHoverSection(true) }}
           onMouseLeave={() => {
             setHoverSection(false)
