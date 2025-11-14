@@ -1,7 +1,5 @@
 .frame {
-    position: fixed;
-    right: 1rem;
-    bottom: 60px;
+    position: absolute;
     background-color: var(--bg-color);
     width: 30vw;
     aspect-ratio: 16 / 9;
@@ -9,6 +7,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    pointer-events: none;
+    z-index: 1;
 }
 
 .frame video,

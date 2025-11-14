@@ -14,7 +14,7 @@ const Case = ({ title, director, onHover, hasLoaded, onListReady }: CaseProps) =
 
     tl.to(text, {
       y: 0,
-      duration: 1.2,
+      duration: 1,
       ease: 'power2.Out',
       stagger: {
         each: 0.05,

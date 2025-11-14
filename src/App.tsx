@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Layout from './layouts/layout'
 import Case from './components/Case/Case'
 import Preview from './components/Preview/Preview'
@@ -17,6 +17,18 @@ const App = () => {
     setHoverVideo(fileId)
   }
 
+  const mousePosition = useRef<{ x: number; y: number }>({ x: 0, y: 0 })
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      mousePosition.current.x = e.clientX
+      mousePosition.current.y = e.clientY
+    }
+
+    window.addEventListener('mousemove', handleMouseMove)
+    return () => window.removeEventListener('mousemove', handleMouseMove)
+  }, [])
+
   return (
     <Layout hasLoaded={hasLoaded}>
       { !hasLoaded && (
@@ -26,6 +38,7 @@ const App = () => {
         <Preview
           hoverVideo={hoverVideo}
           hoverSection={hoverSection}
+          mousePosition={mousePosition}
         />
       )}
       <Header
