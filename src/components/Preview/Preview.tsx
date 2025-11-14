@@ -7,33 +7,32 @@ const Preview = ({ hoverVideo, hoverSection, mousePosition }: PreviewProps) => {
   const frameRef = useRef<HTMLDivElement>(null)
   const videoRef = useRef<HTMLVideoElement>(null)
   const [canPlay, setCanPlay] = useState(false)
-  const rafId = useRef<number | null>(null)
 
   useEffect(() => {
     if (!frameRef.current || !hoverSection) return
 
-    const setX = gsap.quickSetter(frameRef.current, "x", "px")
-    const setY = gsap.quickSetter(frameRef.current, "y", "px")
+    const el = frameRef.current
 
-    const frameWidth = frameRef.current.offsetWidth
-    const frameHeight = frameRef.current.offsetHeight
+    const startX = mousePosition.current.x * 1.1 + el.offsetWidth / 4
+    const startY = mousePosition.current.y - el.offsetHeight / 2
 
-    setX(mousePosition.current.x)
-    setY(mousePosition.current.y)
+    el.style.transform = `translate(${startX}px, ${startY}px)`
+
+    const setX = gsap.quickTo(el, "x", { duration: 0.3, ease: "power2.out" })
+    const setY = gsap.quickTo(el, "y", { duration: 0.3, ease: "power2.out" })
 
     const move = () => {
-      setX(mousePosition.current.x * 1.1 + frameWidth / 4)
-      setY(mousePosition.current.y - frameHeight / 2)
-      rafId.current = requestAnimationFrame(move)
+      const x = mousePosition.current.x * 1.1 + el.offsetWidth / 4
+      const y = mousePosition.current.y - el.offsetHeight / 2
+      setX(x)
+      setY(y)
     }
 
-    rafId.current = requestAnimationFrame(move)
+    window.addEventListener("mousemove", move)
 
     return () => {
-      if (rafId.current) {
-        cancelAnimationFrame(rafId.current)
-        rafId.current = null
-      }
+      window.removeEventListener("mousemove", move)
+      gsap.killTweensOf(el)
     }
   }, [hoverSection])
 
