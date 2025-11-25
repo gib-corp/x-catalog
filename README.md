@@ -1,3 +1,5 @@
 [EXPERIMENT X01 - CATALOG]
 
 INSPIRED BY - [Nicolas Giannn - X](https://x.com/nicolasgiannn)
+
+THIS PROJECT IS INTENDED STRICTLY FOR __LEARNING AND PRACTICE__

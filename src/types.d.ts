@@ -27,6 +27,11 @@ type Video = {
   link: string
 }
 
+type PlayerItem = {
+  player: Player
+  container: HTMLDivElement
+}
+
 type PreviewProps = {
   hoverVideo: string | null
   hoverSection: boolean | null

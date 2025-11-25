@@ -1,115 +1,90 @@
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
+import Player from "@vimeo/player"
 import videos from "../../data/videos.json"
 import "./Preview.css"
 
+type PlayerItem = { player: Player; container: HTMLDivElement }
+
 const Preview = ({ hoverVideo, hoverSection, mousePosition }: PreviewProps) => {
   const frameRef = useRef<HTMLDivElement>(null)
-  const videoRef = useRef<HTMLVideoElement>(null)
-  const [canPlay, setCanPlay] = useState(false)
+  const playersRef = useRef<Record<string, PlayerItem>>({})
 
   useEffect(() => {
-    if (!frameRef.current || !hoverSection) return
-
     const el = frameRef.current
-
+    
+    if (!el) return
     const startX = mousePosition.current.x * 1.1 + el.offsetWidth / 4
     const startY = mousePosition.current.y - el.offsetHeight / 2
 
-    el.style.transform = `translate(${startX}px, ${startY}px)`
+    gsap.set(el, { x: startX, y: startY })
 
-    const setX = gsap.quickTo(el, "x", { duration: 0.3, ease: "power2.out" })
-    const setY = gsap.quickTo(el, "y", { duration: 0.3, ease: "power2.out" })
+    const setX = gsap.quickTo(el, "x", { duration: 0.2, ease: "power2.out" })
+    const setY = gsap.quickTo(el, "y", { duration: 0.2, ease: "power2.out" })
 
     const move = () => {
-      const x = mousePosition.current.x * 1.1 + el.offsetWidth / 4
-      const y = mousePosition.current.y - el.offsetHeight / 2
-      setX(x)
-      setY(y)
+      setX(mousePosition.current.x * 1.1 + el.offsetWidth / 4)
+      setY(mousePosition.current.y - el.offsetHeight / 2)
     }
 
     window.addEventListener("mousemove", move)
-
     return () => {
       window.removeEventListener("mousemove", move)
       gsap.killTweensOf(el)
     }
-  }, [hoverSection])
-
-  useEffect(() => {
-    const preloadImagesSequentially = async () => {
-      for (const { id } of videos) {
-        await new Promise<void>((resolve) => {
-          const img = new Image()
-          img.src = `/thumbnails/${id}.jpeg`
-          img.onload = () => resolve()
-          img.onerror = () => resolve()
-        })
-      }
-    }
-
-    const preloadVideosSequentially = async () => {
-      for (const { id } of videos) {
-        await new Promise<void>((resolve) => {
-          const vid = document.createElement('video')
-          vid.src = `/videos/${id}.mp4`
-          vid.preload = 'metadata'
-          vid.muted = true
-
-          vid.onloadedmetadata = () => resolve()
-          vid.onerror = () => resolve()
-
-          setTimeout(() => resolve(), 1500)
-        })
-      }
-    }
-
-    const preloadAll = async () => {
-      await preloadImagesSequentially()
-      await preloadVideosSequentially()
-    }
-
-    preloadAll()
   }, [])
 
   useEffect(() => {
-    const frameVideo = videoRef.current
-    if (!frameVideo || !hoverVideo) return
+    if (!frameRef.current) return
 
-    setCanPlay(false)
-    frameVideo.src = `/videos/${hoverVideo}.mp4`
+    videos.forEach(v => {
+      if (!playersRef.current[v.id]) {
+        const container = document.createElement("div")
+        container.style.position = "absolute"
+        container.style.top = "0"
+        container.style.left = "0"
+        container.style.width = "100%"
+        container.style.height = "100%"
+        container.style.opacity = "0"
+        container.style.pointerEvents = "none"
+        frameRef.current!.appendChild(container)
 
-    const handleCanPlay = () => {
-      setCanPlay(true)
-      frameVideo.play().catch(() => {})
-    }
+        const player = new Player(container, {
+          id: v.id,
+          autoplay: false,
+          muted: true,
+          loop: true,
+          background: true
+        })
+        player.pause().catch(() => {})
 
-    frameVideo.addEventListener('canplay', handleCanPlay, { once: true })
+        playersRef.current[v.id] = { player, container }
+      }
+    })
+  }, [])
 
-    if (frameVideo.readyState >= 3) { 
-      handleCanPlay()
-    }
+  useEffect(() => {
+    Object.keys(playersRef.current).forEach(id => {
+      const { player, container } = playersRef.current[id]
 
-    return () => {
-      frameVideo.removeEventListener('canplay', handleCanPlay)
-    }
+      if(id === hoverVideo) {
+        player.setCurrentTime(0).catch(() => {})
+        player.ready().then(() => {
+          player.play().catch(() => {})
+        })
+        gsap.to(container, { opacity: id === hoverVideo ? 1 : 0, duration: 0 })
+      } else {
+        gsap.to(container, { opacity: 0, duration: 0 })
+      }
+    })
   }, [hoverVideo])
 
-  if (!hoverSection) return null
-
   return (
-    <div ref={frameRef} className="frame">
-      { !canPlay && (
-        <img src={`/thumbnails/${hoverVideo}.jpeg`} />
-      )}
-      <video
-        ref={videoRef}
-        height="100%"
-        autoPlay
-        loop
-        muted
-      />
-    </div>
+    <div
+      ref={frameRef}
+      className="frame"
+      style={{ visibility: hoverSection ? 'visible' : 'hidden', pointerEvents: 'none' }}
+    />
   )
 }
 

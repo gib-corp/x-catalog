@@ -1,5 +1,5 @@
 .case {
-    padding: .3rem 0;
+    padding: .23rem 0;
     font-size: clamp(.8rem, 2vw, 1rem);
     overflow: hidden;
 }
