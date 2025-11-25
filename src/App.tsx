@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import Layout from './layouts/layout'
 import Case from './components/Case/Case'
 import Preview from './components/Preview/Preview'
@@ -8,48 +8,36 @@ import Header from "./components/Header/Header";
 
 const App = () => {
 
-  const [hoverVideo, setHoverVideo] = useState<string | null>(null)
-  const [hoverSection, setHoverSection] = useState(false)
+  const [hoverVideo, setHoverVideo] = useState<string | null>(null) //Video ID = Vimeo
+  const [hoverSection, setHoverSection] = useState(false) // Section Visible ? True False
   const [hasLoaded, setHasLoaded] = useState(false) // Animation Landing
   const [isListReady, setIsListReady ] = useState(false) // Animation List
 
-  const handleHover = (fileId: string) => {
+  const handleHover = (fileId: string | null) => {
     setHoverVideo(fileId)
   }
-
-  const mousePosition = useRef<{ x: number; y: number }>({ x: 0, y: 0 })
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      mousePosition.current.x = e.clientX
-      mousePosition.current.y = e.clientY
-    }
-
-    window.addEventListener('mousemove', handleMouseMove)
-    return () => window.removeEventListener('mousemove', handleMouseMove)
-  }, [])
 
   return (
     <Layout hasLoaded={hasLoaded}>
       { !hasLoaded && (
         <Loading onLoaded={() => setHasLoaded(true)} />
       )}
-      { isListReady && (
-        <Preview
-          hoverVideo={hoverVideo}
-          hoverSection={hoverSection}
-          mousePosition={mousePosition}
-        />
-      )}
+
+      <Preview
+        hoverVideo={hoverVideo}
+        hoverSection={hoverSection}
+      />
+
       <Header
         hasLoaded={hasLoaded}
       />
+
       { hasLoaded && (
         <section style={!isListReady ? { pointerEvents: 'none' } : { pointerEvents: 'auto' }}
           onMouseEnter={() => { setHoverSection(true) }}
           onMouseLeave={() => {
             setHoverSection(false)
-            handleHover("empty")
+            handleHover(null)
           }}
         >
           {videos.map((video: Video) => (

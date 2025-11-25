@@ -35,7 +35,6 @@ type PlayerItem = {
 type PreviewProps = {
   hoverVideo: string | null
   hoverSection: boolean | null
-  mousePosition: RefObject<{ x: number; y: number }>
 }
 
 type HeaderProps = {

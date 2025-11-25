@@ -6,28 +6,34 @@ import "./Preview.css"
 
 type PlayerItem = { player: Player; container: HTMLDivElement }
 
-const Preview = ({ hoverVideo, hoverSection, mousePosition }: PreviewProps) => {
+const Preview = ({ hoverVideo, hoverSection }: PreviewProps) => {
   const frameRef = useRef<HTMLDivElement>(null)
   const playersRef = useRef<Record<string, PlayerItem>>({})
+  const mouseRef = useRef({ x: 0, y: 0 })
 
   useEffect(() => {
     const el = frameRef.current
-    
     if (!el) return
-    const startX = mousePosition.current.x * 1.1 + el.offsetWidth / 4
-    const startY = mousePosition.current.y - el.offsetHeight / 2
-
-    gsap.set(el, { x: startX, y: startY })
 
     const setX = gsap.quickTo(el, "x", { duration: 0.2, ease: "power2.out" })
     const setY = gsap.quickTo(el, "y", { duration: 0.2, ease: "power2.out" })
 
-    const move = () => {
-      setX(mousePosition.current.x * 1.1 + el.offsetWidth / 4)
-      setY(mousePosition.current.y - el.offsetHeight / 2)
+    const move = (e: MouseEvent) => {
+      mouseRef.current.x = e.clientX
+      mouseRef.current.y = e.clientY
+
+      const x = mouseRef.current.x * 1.1 + el.offsetWidth / 4
+      const y = mouseRef.current.y - el.offsetHeight / 2
+
+      setX(x)
+      setY(y)
     }
 
     window.addEventListener("mousemove", move)
+
+    setX(window.innerWidth / 2)
+    setY(window.innerHeight / 2)
+
     return () => {
       window.removeEventListener("mousemove", move)
       gsap.killTweensOf(el)
@@ -46,6 +52,7 @@ const Preview = ({ hoverVideo, hoverSection, mousePosition }: PreviewProps) => {
         container.style.width = "100%"
         container.style.height = "100%"
         container.style.opacity = "0"
+        container.style.overflow = "hidden"
         container.style.pointerEvents = "none"
         frameRef.current!.appendChild(container)
 
@@ -64,6 +71,14 @@ const Preview = ({ hoverVideo, hoverSection, mousePosition }: PreviewProps) => {
   }, [])
 
   useEffect(() => {
+
+    if (!hoverVideo) {
+      Object.values(playersRef.current).forEach(({ container }) => {
+        gsap.to(container, { opacity: 0, duration: 0 })
+      })
+      return
+    }
+
     Object.keys(playersRef.current).forEach(id => {
       const { player, container } = playersRef.current[id]
 
