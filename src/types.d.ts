@@ -27,11 +27,6 @@ type Video = {
   link: string
 }
 
-type PlayerItem = {
-  player: Player
-  container: HTMLDivElement
-}
-
 type PreviewProps = {
   hoverVideo: string | null
   hoverSection: boolean | null
@@ -47,4 +42,16 @@ type CaseProps = {
   onHover: () => void
   hasLoaded: boolean
   onListReady: () => void
+}
+
+interface VimeoProps {
+  hoverVideo: string | null;
+  
+  containersRef: {
+    current: Record<string, HTMLDivElement | null>;
+  };
+  
+  playersRef: {
+    current: Record<string, Player>;
+  };
 }
