@@ -4,12 +4,10 @@ import Player from "@vimeo/player"
 import videos from "../../data/videos.json"
 import "./Preview.css"
 
-type PlayerItem = { player: Player; container: HTMLDivElement }
-
 const Preview = ({ hoverVideo, hoverSection }: PreviewProps) => {
   const frameRef = useRef<HTMLDivElement>(null)
-  const playersRef = useRef<Record<string, PlayerItem>>({})
-  const mouseRef = useRef({ x: 0, y: 0 })
+  const containersRef = useRef<Record<string, HTMLDivElement | null>>({})
+  const playersRef = useRef<Record<string, Player>>({})
 
   useEffect(() => {
     const el = frameRef.current
@@ -17,13 +15,15 @@ const Preview = ({ hoverVideo, hoverSection }: PreviewProps) => {
 
     const setX = gsap.quickTo(el, "x", { duration: 0.2, ease: "power2.out" })
     const setY = gsap.quickTo(el, "y", { duration: 0.2, ease: "power2.out" })
+    
+    const mouseRef = { x: 0, y: 0 } 
 
     const move = (e: MouseEvent) => {
-      mouseRef.current.x = e.clientX
-      mouseRef.current.y = e.clientY
+      mouseRef.x = e.clientX
+      mouseRef.y = e.clientY
 
-      const x = mouseRef.current.x * 1.1 + el.offsetWidth / 4
-      const y = mouseRef.current.y - el.offsetHeight / 2
+      const x = mouseRef.x * 1.1 + el.offsetWidth / 4 
+      const y = mouseRef.y - el.offsetHeight / 2 
 
       setX(x)
       setY(y)
@@ -41,55 +41,55 @@ const Preview = ({ hoverVideo, hoverSection }: PreviewProps) => {
   }, [])
 
   useEffect(() => {
-    if (!frameRef.current) return
+    Object.keys(containersRef.current).forEach((id) => {
+      const containerEl = containersRef.current[id]
 
-    videos.forEach(v => {
-      if (!playersRef.current[v.id]) {
-        const container = document.createElement("div")
-        container.style.position = "absolute"
-        container.style.top = "0"
-        container.style.left = "0"
-        container.style.width = "100%"
-        container.style.height = "100%"
-        container.style.opacity = "0"
-        container.style.overflow = "hidden"
-        container.style.pointerEvents = "none"
-        frameRef.current!.appendChild(container)
-
-        const player = new Player(container, {
-          id: v.id,
+      if (containerEl && !playersRef.current[id]) {
+        const player = new Player(containerEl, {
+          id: Number(id),
           autoplay: false,
           muted: true,
           loop: true,
-          background: true
+          background: true,
+          dnt: true,
+          controls: false,
+          responsive: true
         })
-        player.pause().catch(() => {})
 
-        playersRef.current[v.id] = { player, container }
+        player.ready().then(() => {}).catch(() => {});
+        playersRef.current[id] = player
       }
     })
+
+    return () => {
+      Object.values(playersRef.current).forEach(p => p.destroy())
+      playersRef.current = {}
+    }
   }, [])
 
   useEffect(() => {
+    Object.keys(playersRef.current).forEach((id) => {
+      const player = playersRef.current[id]
+      const container = containersRef.current[id]
+      
+      if (!container) return
 
-    if (!hoverVideo) {
-      Object.values(playersRef.current).forEach(({ container }) => {
-        gsap.to(container, { opacity: 0, duration: 0 })
-      })
-      return
-    }
-
-    Object.keys(playersRef.current).forEach(id => {
-      const { player, container } = playersRef.current[id]
-
-      if(id === hoverVideo) {
-        player.setCurrentTime(0).catch(() => {})
-        player.ready().then(() => {
-          player.play().catch(() => {})
+      if (id === hoverVideo) {
+        player.play().then(() => {
+            if (hoverVideo === id) {
+               gsap.set(container, { opacity: 1, overwrite: true })
+            } else {
+               player.pause()
+            }
+        }).catch((error) => {
+            if (error.name !== 'AbortError') console.warn(error)
         })
-        gsap.to(container, { opacity: id === hoverVideo ? 1 : 0, duration: 0 })
+
       } else {
-        gsap.to(container, { opacity: 0, duration: 0 })
+        gsap.set(container, { opacity: 0, overwrite: true })
+        
+        player.setCurrentTime(0).catch(() => {})
+        player.pause().catch(() => {})
       }
     })
   }, [hoverVideo])
@@ -98,8 +98,18 @@ const Preview = ({ hoverVideo, hoverSection }: PreviewProps) => {
     <div
       ref={frameRef}
       className="frame"
-      style={{ visibility: hoverSection ? 'visible' : 'hidden', pointerEvents: 'none' }}
-    />
+      style={{
+        visibility: hoverSection ? 'visible' : 'hidden'
+      }}
+    >
+      {videos.map((video) => (
+        <div
+          key={video.id}
+          ref={(el) => { containersRef.current[video.id] = el}}
+          className="vimeo"
+        />
+      ))}
+    </div>
   )
 }
 
