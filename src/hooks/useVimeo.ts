@@ -33,17 +33,12 @@ export const useVimeo = (videos: Video[], { hoverVideo, containersRef, playersRe
         if (!container) return
 
         if (id === hoverVideo) {
-            player.play().then(() => {
-                if (hoverVideo === id) {
-                    gsap.set(container, { opacity: 1, overwrite: true })
-                } else {
-                    player.pause()
-                }
-            }).catch((error: any) => {
+            gsap.set(container, { opacity: 1, zIndex: 2, overwrite: true })
+            player.play().catch((error: any) => {
                 if (error.name !== 'AbortError') console.warn(error)
             })
         } else {
-            gsap.set(container, { opacity: 0, overwrite: true })
+            gsap.set(container, { opacity: 0, zIndex: 1, overwrite: true })
             player.setCurrentTime(0).catch(() => {})
             player.pause().catch(() => {})
         }
